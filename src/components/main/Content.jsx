@@ -10,19 +10,38 @@ const Content = () => {
         <div className='content-container'>
             <div className='content-heading'>
                 <h1>Access curated courses worth</h1>
-                <h1>₹ 18,500
+                <h1>
+                    ₹ <span class="strikethrough-text">18,500 </span>
                     at just
-                    ₹ 99
-                    per year!</h1>
+                    <span class="list-item-textblue"> ₹ 99 </span>
+                    per year!
+                </h1>
 
             </div>
 
             <ul className='list-item-container'>
-                <li className='list-item'><span><img width={68} src={icon1} alt="" srcset="" /></span>100+ Job relevant courses </li>
-                <li className='list-item'><span><img width={68} src={icon3} alt="" srcset="" /></span>20,000+ Hours of content </li>
-                <li className='list-item'><span><img width={68} src={liveIcon} alt="" srcset="" /></span>Exclusive webinar access </li>
-                <li className='list-item'><span><img width={68} src={icon2} alt="" srcset="" /></span>Scholarship worth ₹94,500 </li>
-                <li className='list-item'><span><img width={68} src={icon4} alt="" srcset="" /></span>Ad Free learning experience</li>
+
+                <li className='list-item'>
+                    <div><img width={40} src={icon1} alt="" srcset="" /></div>
+                    <div><span className='list-item-textblue'>100+</span> Job relevant courses </div>
+                </li>
+                <li className='list-item'>
+                    <div><img width={40} src={icon3} alt="" srcset="" /></div>
+                    <div><span className='list-item-textblue'>20,000+</span> Hours of content </div>
+                </li>
+                <li className='list-item'>
+                    <div><img width={40} src={liveIcon} alt="" srcset="" /></div>
+                    <div><span className='list-item-textblue'>Exclusive</span>  webinar access </div>
+                </li>
+                <li className='list-item'>
+                    <div><img width={40} src={icon2} alt="" srcset="" /></div>
+                    <div>Scholarship worth <span className='list-item-textblue'>₹94,500</span> </div>
+                </li>
+                <li className='list-item'>
+                    <div><img width={40} src={icon4} alt="" srcset="" /></div>
+                    <div><span className='list-item-textblue'>Ad Free</span> learning experience </div>
+                </li>
+
             </ul>
         </div>
     )
