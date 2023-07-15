@@ -13,6 +13,52 @@ const Subscriptions = () => {
 
     console.log(selectedSubscription)
 
+    const Data = [
+        {
+            id: 1,
+            timeperiod: 12,
+            total: 179,
+            monthly: 15,
+            label: "Expired"
+        },
+        {
+            id: 2,
+            timeperiod: 12,
+            total: 179,
+            monthly: 15,
+            label: "Recommended",
+            basePrice: 18500
+        },
+        {
+            id: 3,
+            timeperiod: 6,
+            total: 149,
+            monthly: 25,
+            basePrice: 9250
+
+        },
+        {
+            id: 4,
+            timeperiod: 3,
+            total: 99,
+            monthly: 33,
+            basePrice: 4625
+        },
+    ]
+
+    // let basePrice = 100;
+
+    const selectedSubscriptionData = Data.find(item => item.id == selectedSubscription);
+
+    // const subscriptionFee = selectedSubscriptionData ? basePrice * (selectedSubscriptionData.timeperiod - 1) : 0;
+    const subscriptionFee = selectedSubscriptionData ? selectedSubscriptionData?.basePrice : 0
+    const limitedOffer = selectedSubscriptionData ? selectedSubscriptionData?.basePrice - selectedSubscriptionData?.total : 0
+
+    console.log(subscriptionFee, limitedOffer)
+    const total = (subscriptionFee - limitedOffer)
+
+
+    console.log(selectedSubscriptionData)
     return (
         <div className='subscription-container'>
             <div className="btn-with-text-container">
@@ -26,105 +72,56 @@ const Subscriptions = () => {
                 </div>
             </div>
             <h1 style={{ textAlign: "center", fontSize: "20px" }}>Select your subcription plan</h1>
-            {/* <div className="subscriptions-lists">
-
-            </div> */}
 
             <div className="radio-button-container">
-                <label className={`radio-button expired disabled ${selectedSubscription === 'subscription0' ? 'selected' : ''}`}>
-                    <input
-                        type="radio"
-                        disabled={true}
-                        name="subscription"
-                        value="subscription0"
-                        checked={selectedSubscription === 'subscription0'}
-                        onChange={handleSubscriptionChange}
-                    />
-                    <span className="checkmark"><RiCheckLine /></span>
-                    <div className="subscription-info">
-                        <div className="">12 Months Subscription</div>
-                        <div className="subscription-price">
-                            <div>
-                                Total <span className="total-price">₹179</span>
+
+                {Data.map((item) => (
+                    <label
+                        className={`radio-button ${item.label === "Expired" ? "expired" : item.label === "Recommended" ? "recommend" : " "}  ${item.id == selectedSubscription ? 'selected' : ''}`}
+                        key={item.id}
+                    >
+                        <input
+                            type="radio"
+                            name="subscription"
+                            value={item.id}
+                            checked={selectedSubscription == item.id}
+                            onChange={handleSubscriptionChange}
+                            disabled={item.label === "Expired"}
+                        />
+                        <span className="checkmark">
+                            <RiCheckLine />
+                        </span>
+                        <div className="subscription-info">
+                            <div className="subscription-text">{item.timeperiod} Months Subscription</div>
+                            <div className="subscription-price">
+                                <div>
+                                    Total <b className="total-price">₹{item.total}</b>
+                                </div>
+                                <div className="monthly-price">₹{item.monthly}/mo</div>
                             </div>
-                            <div className="monthly-price">₹15/mo</div>
                         </div>
-                    </div>
-                </label>
-                <label className={`radio-button recommend ${selectedSubscription === 'subscription1' ? 'selected' : ''}`}>
-                    <input
-                        type="radio"
-                        name="subscription"
-                        value="subscription1"
-                        checked={selectedSubscription === 'subscription1'}
-                        onChange={handleSubscriptionChange}
-                    />
-                    <span className="checkmark"><RiCheckLine /></span>
-                    <div className="subscription-info">
-                        <div className="subscription-text">12 Months Subscription</div>
-                        <div className="subscription-price">
-                            <div>
-                                Total <span className="total-price">₹179</span>
-                            </div>
-                            <div className="monthly-price">₹15/mo</div>
-                        </div>
-                    </div>
-                </label>
-                <label className={`radio-button ${selectedSubscription === 'subscription2' ? 'selected' : ''}`}>
-                    <input
-                        type="radio"
-                        name="subscription"
-                        value="subscription2"
-                        checked={selectedSubscription === 'subscription2'}
-                        onChange={handleSubscriptionChange}
-                    />
-                    <span className="checkmark"><RiCheckLine /></span>
-                    <div className="subscription-info">
-                        <div className="subscription-text">6 Months Subscription</div>
-                        <div className="subscription-price">
-                            <div>
-                                Total <span className="total-price">₹179</span>
-                            </div>
-                            <div className="monthly-price">₹25/mo</div>
-                        </div>
-                    </div>
-                </label>
-                <label className={`radio-button ${selectedSubscription === 'subscription3' ? 'selected' : ''}`}>
-                    <input
-                        type="radio"
-                        name="subscription"
-                        value="subscription3"
-                        checked={selectedSubscription === 'subscription3'}
-                        onChange={handleSubscriptionChange}
-                    />
-                    <span className="checkmark"><RiCheckLine /></span>
-                    <div className="subscription-info">
-                        <div className="subscription-text">3 Months Subscription</div>
-                        <div className="subscription-price">
-                            <div>
-                                Total <span className="total-price">₹179</span>
-                            </div>
-                            <div className="monthly-price">₹33/mo</div>
-                        </div>
-                    </div>
-                </label>
+                    </label>
+                ))}
+
             </div>
 
             <div className="total-subcription-container">
                 <div style={{ paddingTop: "12px" }} className='subsfee-container'>
                     <div>Subscription Fee</div>
-                    <div>₹18,500</div>
+                    <b>₹{subscriptionFee}</b>
                 </div>
                 <div className="limt-time-offer">
                     <div className='subsfee-container'>
-                        <div>Subscription Fee</div>
-                        <div>₹18,500</div>
+                        <div style={{ color: "red" }}>Limited Time Offer</div>
+                        <b>-₹{limitedOffer}</b>
                     </div>
-                    <div className='isvalid-text'><span style={{ color: "red", fontSize: "30px" }}><AiOutlineFieldTime /></span>Offer valid till 25th March 2023 </div>
+                    <div style={{ color: "red", backgroundColor: "" }} className='isvalid-text'><span style={{ color: "red", fontSize: "20px" }}>
+                        <AiOutlineFieldTime />
+                    </span>Offer valid till 25th March 2023 </div>
                 </div>
                 <div className='subsfee-container'>
                     <div>Total (Incl. of 18% GST)</div>
-                    <div>₹149</div>
+                    <b>₹ {total}</b>
                 </div>
             </div>
 
